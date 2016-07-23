@@ -12,9 +12,9 @@ You can config it with the method.
 Every para has a default value. You can set what you like.
 
 #####The protocol method in your controller
-`func segmentTitlesForSegmentView(segmentView: EMSegmentView) -> [String]`
-`func contentViewForSegmentView(SegmentView: EMSegmentView) -> UIView`
-`func didSelectSegment(segmentView: EMSegmentView, atIndexPath indexPath: Int)`
+`func segmentTitlesForSegmentView(segmentView: EMSegmentView) -> [String]`<br>
+`func contentViewForSegmentView(SegmentView: EMSegmentView) -> UIView`<br>
+`func didSelectSegment(segmentView: EMSegmentView, atIndexPath indexPath: Int)`<br>
 
 - first one is the segment title, return a string array
 - second is the content view, show what you want to show under segment
