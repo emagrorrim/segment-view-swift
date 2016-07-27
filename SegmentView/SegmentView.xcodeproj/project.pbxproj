@@ -58,20 +58,20 @@
 		7CAD20951D40BAF90040E2E0 /* SegmentView */ = {
 			isa = PBXGroup;
 			children = (
-				7CAD20AA1D40BB7C0040E2E0 /* SegmentView */,
-				7CAD20A81D40BB300040E2E0 /* App */,
+				7CAD20AA1D40BB7C0040E2E0 /* EMSegmentView */,
+				7CAD20A81D40BB300040E2E0 /* Example */,
 				7CAD20981D40BAF90040E2E0 /* ViewController.swift */,
 			);
 			path = SegmentView;
 			sourceTree = "<group>";
 		};
-		7CAD20A81D40BB300040E2E0 /* App */ = {
+		7CAD20A81D40BB300040E2E0 /* Example */ = {
 			isa = PBXGroup;
 			children = (
 				7CAD20AF1D40BD780040E2E0 /* Assets */,
 				7CAD20A91D40BB3E0040E2E0 /* View */,
 			);
-			name = App;
+			name = Example;
 			sourceTree = "<group>";
 		};
 		7CAD20A91D40BB3E0040E2E0 /* View */ = {
@@ -83,13 +83,13 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		7CAD20AA1D40BB7C0040E2E0 /* SegmentView */ = {
+		7CAD20AA1D40BB7C0040E2E0 /* EMSegmentView */ = {
 			isa = PBXGroup;
 			children = (
 				7CAD20AB1D40BBF60040E2E0 /* EMSegmentView.swift */,
 				7CAD20AD1D40BC570040E2E0 /* EMSegmentViewProtocol.swift */,
 			);
-			name = SegmentView;
+			name = EMSegmentView;
 			sourceTree = "<group>";
 		};
 		7CAD20AF1D40BD780040E2E0 /* Assets */ = {
@@ -328,6 +328,7 @@
 				7CAD20A71D40BAF90040E2E0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
