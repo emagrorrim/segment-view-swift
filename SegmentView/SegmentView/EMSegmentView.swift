@@ -7,13 +7,11 @@ import UIKit
 class EMSegmentView: UIView {
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
+    configureSegmentView()
   }
   
   override func willMoveToWindow(newWindow: UIWindow?) {
     super.willMoveToWindow(newWindow)
-    if self.themeColor == nil {
-      configureSegmentView()
-    }
     loadSegmentView()
   }
   
@@ -23,24 +21,26 @@ class EMSegmentView: UIView {
   private var themeColor: UIColor!
   private var bgColor: UIColor!
   private var btnTitleColor :UIColor!
-  private var segmentBtnsHeight: CGFloat!
   private var titleFontSize: CGFloat!
-  private var contentView: UIView = UIView()
   
   private var segmentHintView = UIView()
   private var segmentBtns: [UIButton]! = []
   private var segmentHintLeftContraint: NSLayoutConstraint!
   
-  init() {
+  init(segmentTitles: [String]) {
     super.init(frame: CGRect())
     configureSegmentView()
+    self.segmentTitles = segmentTitles
   }
   
-  func configureSegmentView(themeColor: UIColor = UIColor.redColor(), bgColor: UIColor = UIColor.whiteColor(), btnTitleColor: UIColor = UIColor.darkGrayColor(), segmentBtnsHeight: CGFloat = 35.0, titleFontSize: CGFloat = 13.0) {
+  func configureSegmentTitle(segmentTitles: [String]) {
+    self.segmentTitles = segmentTitles
+  }
+  
+  func configureSegmentView(themeColor: UIColor = UIColor.redColor(), bgColor: UIColor = UIColor.whiteColor(), btnTitleColor: UIColor = UIColor.darkGrayColor(), titleFontSize: CGFloat = 13.0) {
     self.themeColor = themeColor
     self.bgColor = bgColor
     self.btnTitleColor = btnTitleColor
-    self.segmentBtnsHeight = segmentBtnsHeight
     self.titleFontSize = titleFontSize
   }
   
@@ -52,17 +52,10 @@ class EMSegmentView: UIView {
   }
   
   private func loadSegmentView() {
-    layer.cornerRadius = 4.0
     clipsToBounds = true
     backgroundColor = bgColor
-    guard let delegate = self.delegate else {
-      return
-    }
-    segmentTitles = delegate.segmentTitlesForSegmentView(self)
-    contentView = delegate.contentViewForSegmentView(self)
     loadSegmentBtns()
     loadSegmentHintView()
-    loadContentView()
   }
   
   private func loadSegmentBtns() {
@@ -80,7 +73,7 @@ class EMSegmentView: UIView {
       addSubview(segmentBtn)
       segmentBtns.append(segmentBtn)
       
-      addConstraints(NSLayoutConstraint.constraintsWithVisualFormat( "V:|[segmentBtn(height)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: ["height": segmentBtnsHeight], views: ["segmentBtn": segmentBtn] ))
+      addConstraints(NSLayoutConstraint.constraintsWithVisualFormat( "V:|[segmentBtn]-2-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["segmentBtn": segmentBtn] ))
     }
     guard let visualFommatString = generateSegmentBtnsAutoLayoutVisualFommatString() else {
       return
@@ -136,12 +129,5 @@ class EMSegmentView: UIView {
     addConstraint(segmentHintLeftContraint)
     addConstraint(NSLayoutConstraint(item: segmentHintView, attribute: .Width, relatedBy: .Equal, toItem: segmentBtn, attribute: .Width, multiplier: 1.0, constant: 0.0))
     addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[segmentBtn][segmentHintView(2)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["segmentHintView": segmentHintView, "segmentBtn": segmentBtn]))
-  }
-  
-  private func loadContentView() {
-    addSubview(contentView)
-    contentView.translatesAutoresizingMaskIntoConstraints = false
-    addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[contentView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["contentView": contentView]))
-    addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[segmentHintView][contentView]|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["contentView": contentView, "segmentHintView": segmentHintView]))
   }
 }

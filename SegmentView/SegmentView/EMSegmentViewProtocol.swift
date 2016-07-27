@@ -5,8 +5,6 @@
 import UIKit
 
 protocol EMSegmentViewDelegate {
-  func segmentTitlesForSegmentView(segmentView: EMSegmentView) -> [String]
-  func contentViewForSegmentView(SegmentView: EMSegmentView) -> UIView
   func didSelectSegment(segmentView: EMSegmentView, atIndexPath indexPath: Int)
 }
 
