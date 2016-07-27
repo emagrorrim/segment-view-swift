@@ -60,7 +60,6 @@
 			children = (
 				7CAD20AA1D40BB7C0040E2E0 /* EMSegmentView */,
 				7CAD20A81D40BB300040E2E0 /* Example */,
-				7CAD20981D40BAF90040E2E0 /* ViewController.swift */,
 			);
 			path = SegmentView;
 			sourceTree = "<group>";
@@ -70,6 +69,7 @@
 			children = (
 				7CAD20AF1D40BD780040E2E0 /* Assets */,
 				7CAD20A91D40BB3E0040E2E0 /* View */,
+				7CAD20981D40BAF90040E2E0 /* ViewController.swift */,
 			);
 			name = Example;
 			sourceTree = "<group>";
