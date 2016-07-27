@@ -51,6 +51,22 @@ class EMSegmentView: UIView {
     loadSegmentView()
   }
   
+  func selectSegment(sender: UIButton) {
+    segmentBtns.forEach() { segmentBtn -> Void in
+      segmentBtn.setTitleColor(btnTitleColor, forState: UIControlState(rawValue: 0))
+    }
+    sender.setTitleColor(themeColor, forState: UIControlState(rawValue: 0))
+    removeConstraint(segmentHintLeftContraint)
+    segmentHintLeftContraint = NSLayoutConstraint(item: segmentHintView, attribute: .Left, relatedBy: .Equal, toItem: sender, attribute: .Left, multiplier: 1.0, constant: 0.0)
+    addConstraint(segmentHintLeftContraint)
+    UIView.animateWithDuration(0.5, animations: { [weak self] () -> () in
+      if let strongSelf = self {
+        strongSelf.layoutIfNeeded()
+      }
+      })
+    delegate.didSelectSegment(self, atIndexPath: sender.tag)
+  }
+  
   private func loadSegmentView() {
     clipsToBounds = true
     backgroundColor = bgColor
@@ -61,19 +77,8 @@ class EMSegmentView: UIView {
   private func loadSegmentBtns() {
     segmentBtns = []
     for i in 0..<segmentTitles.count {
-      let title = segmentTitles[i]
-      let segmentBtn: UIButton = UIButton()
-      segmentBtn.backgroundColor = nil
-      segmentBtn.translatesAutoresizingMaskIntoConstraints = false
-      segmentBtn.setTitle(title, forState: UIControlState(rawValue: 0))
-      segmentBtn.setTitleColor(i == 0 ? themeColor : btnTitleColor, forState: UIControlState(rawValue: 0))
-      segmentBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(titleFontSize)
-      segmentBtn.addTarget(self, action: #selector(selectSegment(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-      segmentBtn.tag = i
-      addSubview(segmentBtn)
+      let segmentBtn = setOneSegmentBtn(i)
       segmentBtns.append(segmentBtn)
-      
-      addConstraints(NSLayoutConstraint.constraintsWithVisualFormat( "V:|[segmentBtn]-2-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["segmentBtn": segmentBtn] ))
     }
     guard let visualFommatString = generateSegmentBtnsAutoLayoutVisualFommatString() else {
       return
@@ -82,6 +87,21 @@ class EMSegmentView: UIView {
       return
     }
     addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(visualFommatString, options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: segmentBtnsDic))
+  }
+  
+  private func setOneSegmentBtn(index: Int) -> UIButton {
+    let title = segmentTitles[index]
+    let segmentBtn: UIButton = UIButton()
+    segmentBtn.backgroundColor = nil
+    segmentBtn.translatesAutoresizingMaskIntoConstraints = false
+    segmentBtn.setTitle(title, forState: UIControlState(rawValue: 0))
+    segmentBtn.setTitleColor(index == 0 ? themeColor : btnTitleColor, forState: UIControlState(rawValue: 0))
+    segmentBtn.titleLabel?.font = UIFont.boldSystemFontOfSize(titleFontSize)
+    segmentBtn.addTarget(self, action: #selector(selectSegment(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+    segmentBtn.tag = index
+    addSubview(segmentBtn)
+    addConstraints(NSLayoutConstraint.constraintsWithVisualFormat( "V:|[segmentBtn]-2-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["segmentBtn": segmentBtn] ))
+    return segmentBtn
   }
   
   private func generateSegmentBtnsAutoLayoutVisualFommatString() -> String? {
@@ -100,22 +120,6 @@ class EMSegmentView: UIView {
       segmentBtnsDic[segmentTitles[i]] = segmentBtns[i]
     }
     return segmentBtnsDic.count == 0 ? nil : segmentBtnsDic
-  }
-  
-  func selectSegment(sender: UIButton) {
-    segmentBtns.forEach() { segmentBtn -> Void in
-      segmentBtn.setTitleColor(btnTitleColor, forState: UIControlState(rawValue: 0))
-    }
-    sender.setTitleColor(themeColor, forState: UIControlState(rawValue: 0))
-    removeConstraint(segmentHintLeftContraint)
-    segmentHintLeftContraint = NSLayoutConstraint(item: segmentHintView, attribute: .Left, relatedBy: .Equal, toItem: sender, attribute: .Left, multiplier: 1.0, constant: 0.0)
-    addConstraint(segmentHintLeftContraint)
-    UIView.animateWithDuration(0.5, animations: { [weak self] () -> () in
-      if let strongSelf = self {
-        strongSelf.layoutIfNeeded()
-      }
-      })
-    delegate.didSelectSegment(self, atIndexPath: sender.tag)
   }
   
   private func loadSegmentHintView() {
