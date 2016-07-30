@@ -1,4 +1,4 @@
-# segment-view-swift(practice project)
+# EMSegmentView(practice project)
 
 ####Create a segment view with interface builder
 Add a view to your father view and than set your controller to be a delegate.
